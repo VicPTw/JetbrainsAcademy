@@ -21,3 +21,14 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+.idea/
+.gradle/
+.DS_Store
+*task-info.yaml
+*task-remote-info.yaml
+*task.html
+*lesson-info.yaml
+*course-info.yaml
+*course-remote-info.yaml
+build/
