@@ -1,31 +1,67 @@
 package machine;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class CoffeeMachine {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        List<Integer> cupsAffordList = new ArrayList<>();
-        System.out.println("Write how many ml of water the coffee machine has: ");
-        int waterAmount = scanner.nextInt();
-        cupsAffordList.add(waterAmount / 200);
-        System.out.println("Write how many ml of milk the coffee machine has: ");
-        int milkAmount = scanner.nextInt();
-        cupsAffordList.add(milkAmount / 50);
-        System.out.println("Write how many grams of coffee beans the coffee machine has: ");
-        int beanAmount = scanner.nextInt();
-        cupsAffordList.add(beanAmount / 15);
-        System.out.println("Write how many cups of coffee you will need: ");
-        int cupsOfCoffee = scanner.nextInt();
+    static Scanner scanner = new Scanner(System.in);
+    static Machine coffeeMachine = initializeMachine();
 
-        Collections.sort(cupsAffordList);
-        int cupsAfford = cupsAffordList.get(0); 
-        if (cupsOfCoffee == cupsAfford) {
-            System.out.println("Yes, I can make that amount of coffee");
-        } else if (cupsOfCoffee < cupsAfford) {
-            int moreCups = cupsAfford - cupsOfCoffee;
-            System.out.println("Yes, I can make that amount of coffee (and even " + moreCups + " more than that)");
-        } else {
-            System.out.println("No, I can make only " + cupsAfford + " cup(s) of coffee");
+    public static void main(String[] args) {
+
+        coffeeMachine.displayMachineStatus();
+
+        System.out.println();
+
+        while (!askAndDoAction()) {
+            System.out.println("Wrong Action.");
+        }
+
+        System.out.println();
+
+        coffeeMachine.displayMachineStatus();
+
+    }
+
+    private static Machine initializeMachine() {
+        List<Content> contents = new ArrayList<>();
+        contents.add(new Content("water", 400));
+        contents.add(new Content("milk", 540));
+        contents.add(new Content("coffee beans", 120));
+        contents.add(new Content("disposable cups", 9));
+        contents.add(new Content("money", 550));
+        List<Product> products = new ArrayList<>();
+        products.add(new Product(1, "espresso",
+                250, 0,
+                16, 4));
+        products.add(new Product(2, "latte",
+                350, 75,
+                20, 7));
+        products.add(new Product(3, "cappuccino",
+                200, 100,
+                12, 6));
+        return new Machine(contents, products);
+    }
+
+    private static boolean askAndDoAction() {
+        System.out.println("Write action (buy, fill, take): ");
+        String action = scanner.nextLine().trim();
+        switch (action) {
+            case "buy":
+                coffeeMachine.buy();
+                return true;
+            case "fill":
+                coffeeMachine.fill();
+                return true;
+            case "take":
+                coffeeMachine.take();
+                return true;
+            default:
+                System.out.println("Wrong Action.");
+                return false;
         }
     }
+
+
 }
