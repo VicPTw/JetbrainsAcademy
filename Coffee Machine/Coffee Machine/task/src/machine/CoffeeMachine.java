@@ -9,19 +9,9 @@ public class CoffeeMachine {
     static Machine coffeeMachine = initializeMachine();
 
     public static void main(String[] args) {
-
-        coffeeMachine.displayMachineStatus();
-
-        System.out.println();
-
-        while (!askAndDoAction()) {
-            System.out.println("Wrong Action.");
-        }
-
-        System.out.println();
-
-        coffeeMachine.displayMachineStatus();
-
+        while(askAndDoAction()) {
+            System.out.println();
+        };
     }
 
     private static Machine initializeMachine() {
@@ -45,8 +35,9 @@ public class CoffeeMachine {
     }
 
     private static boolean askAndDoAction() {
-        System.out.println("Write action (buy, fill, take): ");
+        System.out.println("Write action (buy, fill, take, remaining, exit): ");
         String action = scanner.nextLine().trim();
+        System.out.println();
         switch (action) {
             case "buy":
                 coffeeMachine.buy();
@@ -57,9 +48,12 @@ public class CoffeeMachine {
             case "take":
                 coffeeMachine.take();
                 return true;
-            default:
-                System.out.println("Wrong Action.");
+            case "exit":
                 return false;
+            case "remaining":
+            default:
+                coffeeMachine.displayMachineStatus();
+                return true;
         }
     }
 
